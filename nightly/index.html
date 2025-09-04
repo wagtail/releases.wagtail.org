@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wagtail Nightly</title>
+    <meta name="keywords" content="Wagtail CMS, CMS, Django, Python">
+    <meta name="description" content="Nightly releases for Wagtail CMS">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body id="idx">
+    <a id="platform-button" style="display: none;" href="#">
+    click or press "n" to cycle platforms
+    </a>
+    <h1>Wagtail nightly</h1>
+    <div id="loading" class="instructions">
+      <p>Loading...</p>
+    </div>
+    <div id="instructions-pip" class="instructions" style="display: none;">
+      <p>Run the following command to install the latest Wagtail nightly build</p>
+      <pre></pre>
+
+      <p class="pm-switcher">See instructions for: <b>pip</b> <a href="#" data-pm-name="pipenv">pipenv</a> <a href="#" data-pm-name="requirementstxt">requirements.txt</a> <a href="#" data-pm-name="pipfile">Pipfile</a></p>
+    </div>
+    <div id="instructions-pipenv" class="instructions" style="display: none;">
+      <p>Run the following command to install the latest Wagtail nightly build</p>
+      <pre></pre>
+
+      <p class="pm-switcher">See instructions for: <a href="#" data-pm-name="pip">pip</a> <b>pipenv</b> <a href="#" data-pm-name="requirementstxt">requirements.txt</a> <a href="#" data-pm-name="pipfile">Pipfile</a></p>
+    </div>
+    <div id="instructions-requirementstxt" class="instructions" style="display: none;">
+      <p>Add the following line to your requirements.txt to install the latest Wagtail nightly build</p>
+      <pre></pre>
+
+      <p class="pm-switcher">See instructions for: <a href="#" data-pm-name="pip">pip</a> <a href="#" data-pm-name="pipenv">pipenv</a> <b>requirements.txt</b> <a href="#" data-pm-name="pipfile">Pipfile</a></p>
+    </div>
+    <div id="instructions-pipfile" class="instructions" style="display: none;">
+      <p>Add the following under [packages] in your Pipfile to install the latest Wagtail nightly build</p>
+      <pre></pre>
+
+      <p class="pm-switcher">See instructions for: <a href="#" data-pm-name="pip">pip</a> <a href="#" data-pm-name="pipenv">pipenv</a> <a href="#" data-pm-name="requirementstxt">requirements.txt</a> <b>Pipfile</b></p>
+    </div>
+    <script type="text/javascript">
+      fetch('https://releases.wagtail.io/nightly/latest.json')
+        .then(response => response.json())
+        .then(json => {
+          document.getElementById('instructions-pipenv').querySelector('pre').innerText = 'pipenv install ' + json.url;
+          document.getElementById('instructions-pip').querySelector('pre').innerText = 'pip install ' + json.url;
+          document.getElementById('instructions-requirementstxt').querySelector('pre').innerText = json.url;
+          document.getElementById('instructions-pipfile').querySelector('pre').innerText = 'wagtail = {file = "' + json.url + '"}';
+
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('instructions-pip').style.display = 'block';
+        });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        for (let element of document.querySelectorAll('.pm-switcher a')) {
+          element.addEventListener('click', e => {
+            e.preventDefault();
+
+            switch (e.target.dataset.pmName) {
+              case 'pip':
+                document.getElementById('instructions-pip').style.display = 'block';
+                document.getElementById('instructions-pipenv').style.display = 'none';
+                document.getElementById('instructions-requirementstxt').style.display = 'none';
+                document.getElementById('instructions-pipfile').style.display = 'none';
+
+                break;
+              case 'pipenv':
+                document.getElementById('instructions-pip').style.display = 'none';
+                document.getElementById('instructions-pipenv').style.display = 'block';
+                document.getElementById('instructions-requirementstxt').style.display = 'none';
+                document.getElementById('instructions-pipfile').style.display = 'none';
+                break;
+              case 'requirementstxt':
+                document.getElementById('instructions-pip').style.display = 'none';
+                document.getElementById('instructions-pipenv').style.display = 'none';
+                document.getElementById('instructions-requirementstxt').style.display = 'block';
+                document.getElementById('instructions-pipfile').style.display = 'none';
+                break;
+              case 'pipfile':
+                document.getElementById('instructions-pip').style.display = 'none';
+                document.getElementById('instructions-pipenv').style.display = 'none';
+                document.getElementById('instructions-requirementstxt').style.display = 'none';
+                document.getElementById('instructions-pipfile').style.display = 'block';
+                break;
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
