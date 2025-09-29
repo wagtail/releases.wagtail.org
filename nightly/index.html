@@ -41,7 +41,7 @@
       <p class="pm-switcher">See instructions for: <a href="#" data-pm-name="pip">pip</a> <a href="#" data-pm-name="pipenv">pipenv</a> <a href="#" data-pm-name="requirementstxt">requirements.txt</a> <b>Pipfile</b></p>
     </div>
     <script type="text/javascript">
-      fetch('https://releases.wagtail.io/nightly/latest.json')
+      fetch('https://releases.wagtail.org/nightly/latest.json')
         .then(response => response.json())
         .then(json => {
           document.getElementById('instructions-pipenv').querySelector('pre').innerText = 'pipenv install ' + json.url;
