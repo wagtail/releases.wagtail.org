@@ -10,6 +10,12 @@ Wagtail’s [latest.txt](https://github.com/wagtail/wagtail/blob/main/scripts/la
 
 Wagtail’s CircleCI continuous integration [triggers publication of nightly releases](https://github.com/wagtail/wagtail/blob/main/.circleci/trigger-nightly-build.sh). Those releases are shared on the [nightly releases index](https://releases.wagtail.org/nightly/index.html).
 
+## Infrastructure
+
+`releases.wagtail.org` (and the legacy `releases.wagtail.io`) is hosted in an S3 bucket (named `releases.wagtail.io`). ACLs are used to mark files as public.
+
+For additional security and performance, CloudFront is used to globally cache requests. CloudFront handles TLS termination, HTTPS redirects, compression and caching.
+
 ## Deploying changes
 
 To deploy changes in this repository, run the `deploy.py` script using `uv`:
