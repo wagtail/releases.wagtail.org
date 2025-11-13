@@ -7,6 +7,7 @@
 from pathlib import Path
 import uuid
 import boto3
+import mimetypes
 
 BUCKET = "releases.wagtail.io"
 CLOUDFRONT_DISTRIBUTION_ID = "E283SZ5CB4MDM0"
@@ -23,12 +24,15 @@ def main():
 
     for file in publish_files:
         path = "nightly/" + str(file.relative_to(PUBLISH_DIR))
+
+        mime_type, _encoding = mimetypes.guess_type(file)
+
         print("Uploading", path)
         s3_client.upload_file(
             str(file),
             BUCKET,
             path,
-            ExtraArgs={"ACL": "public-read"},
+            ExtraArgs={"ACL": "public-read", "ContentType": mime_type},
         )
         uploaded_paths.append(path)
 
