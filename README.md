@@ -12,9 +12,9 @@ Wagtail’s CircleCI continuous integration [triggers publication of nightly rel
 
 ## Infrastructure
 
-`releases.wagtail.org` (and the legacy `releases.wagtail.io`) is hosted in an S3 bucket (named `releases.wagtail.io`). ACLs are used to mark files as public.
+`releases.wagtail.org` (and the legacy `releases.wagtail.io`) is hosted in an S3 bucket (named `releases.wagtail.io`). The entire bucket is considered public.
 
-For additional security and performance, CloudFront is used to globally cache requests. CloudFront handles TLS termination, HTTPS redirects, compression and caching.
+For additional security and performance, CloudFront is used to globally cache requests. CloudFront handles TLS termination, HTTPS redirects, compression and caching. CloudFront uses signed URLs (Origin Access Control) to access the bucket, to prevent access to the bucket directly.
 
 ## Deploying changes
 
